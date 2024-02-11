@@ -22,7 +22,7 @@ let n a =
   | _ -> print_endline "not found"
 ;;
 
-n 6;;
+n 4;;
 
 let b = match [ "swastik"; "acharyya" ] with [] -> "coder" | h :: _t -> h in
 print_endline b
