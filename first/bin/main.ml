@@ -17,12 +17,12 @@ let y = 6
 
 let n a =
   match a with
-  | 5 -> print_endline @@ string_of_int x
-  | 6 -> print_endline @@ string_of_int y
+  | 5 -> print_endline @@ string_of_int x ^ " " ^ "printing from x"
+  | 6 -> print_endline @@ string_of_int y ^ " " ^ "printing from y"
   | _ -> print_endline "not found"
 ;;
 
-n 4;;
+n 6;;
 
 let b = match [ "swastik"; "acharyya" ] with [] -> "coder" | h :: _t -> h in
 print_endline b
