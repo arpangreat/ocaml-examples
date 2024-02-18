@@ -5,11 +5,11 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github arpangreat/ocaml-examples))
 
-(authors "Author Name")
+(authors "Swastik Acharyya")
 
-(maintainers "Maintainer Name")
+(maintainers "Swastik Acharyya")
 
 (license LICENSE)
 
@@ -17,8 +17,8 @@
 
 (package
  (name first)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (synopsis "My first OCaml learning project")
+ (description "This is my first OCaml project for dumping every beginner theory")
  (depends ocaml dune)
  (tags
   (topics "to describe" your project)))

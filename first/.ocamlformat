@@ -1,3 +1,4 @@
 version=0.26.1
 profile=default
 match-indent-nested=always
+let-binding-spacing=double-semicolon

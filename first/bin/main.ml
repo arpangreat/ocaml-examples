@@ -44,3 +44,13 @@ print1 "string"
 let avg a b = (a +. b) /. 2.0;;
 
 print_endline @@ string_of_float (avg 5.0 6.0)
+
+let get_val default o = match o with None -> default | Some x -> x
+
+let rec list_max (lst : 'a list) : 'a option =
+  match lst with [] -> None | h :: t -> Some (max h (list_max t |> get_val h))
+;;
+
+let x = list_max [ 1; 2; 3; 4; 5 ];;
+
+print_endline @@ string_of_int (get_val 0 x)
