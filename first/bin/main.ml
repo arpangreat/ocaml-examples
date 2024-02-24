@@ -74,24 +74,24 @@ print_endline @@ string_of_int (sum t) ^ " sum of tree"
 let rec map f = function [] -> [] | h :: t -> f h :: map f t
 let add' = map (fun x -> x + 1)
 
-let rec combine init op = function
-  | [] -> init
-  | h :: t -> op h (combine init op t)
-;;
+(* let rec combine init op = function *)
+(*   | [] -> init *)
+(*   | h :: t -> op h (combine init op t) *)
+(* ;; *)
 
-let add'' lst = combine 0 ( + ) lst
+(* let add'' lst = combine 0 ( + ) lst *)
 
-let rec fold_right f acc = function
-  | [] -> acc
-  | h :: t -> f h (fold_right f t acc)
-;;
+(* let rec fold_right f acc = function
+     | [] -> acc
+     | h :: t -> f h (fold_right f t acc)
+   ;;
 
-let rec fold_left f acc = function
-  | [] -> acc
-  | h :: t ->
-      let acc' = f acc h in
-      fold_left f acc' t
-;;
+   let rec fold_left f acc = function
+     | [] -> acc
+     | h :: t ->
+         let acc' = f acc h in
+         fold_left f acc' t
+   ;; *)
 
 let rec print_lst = function
   | [] -> ()
@@ -102,3 +102,54 @@ let rec print_lst = function
 
 print_lst (add' [ 1; 2; 3; 4; 5 ])
 (* print_lst (add'' [ 1; 2; 3; 4; 5 ]) *)
+
+let even n = n mod 2 = 0
+
+let rec evens = function
+  | [] -> []
+  | h :: t -> if even h then h :: evens t else evens t
+;;
+
+let lst1 = evens [ 1; 2; 3; 4 ];;
+
+print_endline "Even numbers in a list";;
+print_lst lst1
+
+let odd n = n mod 2 <> 0
+
+let rec odds = function
+  | [] -> []
+  | h :: t -> if odd h then h :: odds t else odds t
+;;
+
+let lst' = odds [ 1; 2; 3; 4 ];;
+
+print_endline "Odd numbers in a list";;
+print_lst lst'
+
+let rec filter p = function
+  | [] -> []
+  | h :: t -> if p h then h :: filter p t else filter p t
+;;
+
+let evens' = filter even
+let odds' = filter odd
+let lst'' = [ 1; 2; 3; 4 ];;
+
+print_lst @@ evens' lst'';;
+print_lst @@ odds' lst''
+
+let rec filter_aux p acc = function
+  | [] -> List.rev acc
+  | h :: t -> if p h then filter_aux p (h :: acc) t else filter_aux p acc t
+;;
+
+let filter p = filter_aux p []
+let lst = filter even [ 1; 2; 3; 4 ];;
+
+print_lst lst
+
+let rec concat = function [] -> "" | h :: t -> h ^ concat t
+let c = concat [ "S"; "w"; "a"; "s"; "t"; "i"; "k" ];;
+
+print_newline @@ print_endline c
