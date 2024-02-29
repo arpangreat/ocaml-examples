@@ -153,3 +153,15 @@ let rec concat = function [] -> "" | h :: t -> h ^ concat t
 let c = concat [ "S"; "w"; "a"; "s"; "t"; "i"; "k" ];;
 
 print_newline @@ print_endline c
+
+let rec map f = function
+  | Leaf -> Leaf
+  | Node (v, l, r) -> Node (f v, map f l, map f r)
+;;
+
+let addNode t = map succ t
+
+let rec fold acc f = function
+  | Leaf -> Leaf
+  | Node (v, l, r) -> f v (fold f acc l) (fold f acc r)
+;;
