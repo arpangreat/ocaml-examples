@@ -1,0 +1,4 @@
+(executable
+ (public_name modules)
+ (name main)
+ (libraries modules))
