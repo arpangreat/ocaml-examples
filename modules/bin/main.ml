@@ -40,7 +40,16 @@ let rec print_lst = function
 (* let tree = Tree.Node (1, Leaf, Leaf) *)
 let list = MyList.[ 1; 2; 3 ] |> print_lst
 
-module MyStack = struct
+module type StackSig = sig
+  type 'a stack
+
+  val empty : 'a stack
+  val push : 'a -> 'a stack -> 'a stack
+  val peek : 'a stack -> 'a
+  val pop : 'a stack -> 'a stack
+end
+
+module MyStack : StackSig = struct
   type 'a stack = Empty | Entry of 'a * 'a stack
 
   let empty = Empty
@@ -49,7 +58,7 @@ module MyStack = struct
   let pop = function Empty -> failwith "Empty" | Entry (_, s) -> s
 end
 
-module ListStack = struct
+module ListStack : StackSig = struct
   type 'a stack = 'a list
 
   let empty = []
@@ -72,7 +81,16 @@ let w =
 (* print_lst' w;; *)
 print_int w |> print_newline
 
-module ListQueue = struct
+module type Queue = sig
+  type 'a queue
+
+  val empty : 'a queue
+  val enqueue : 'a -> 'a queue -> 'a queue
+  val peek : 'a queue -> 'a option
+  val dequeue : 'a queue -> 'a queue option
+end
+
+module ListQueue : Queue = struct
   type 'a queue = 'a list
 
   let empty = []
@@ -102,11 +120,30 @@ end
 
 let ( >>| ) opt f = match opt with None -> None | Some x -> Some (f x)
 
-let q : int list option =
-  ListQueue.(empty |> enqueue 42 |> dequeue >>| enqueue 43)
+(* let q : int list option =
+     ListQueue.(empty |> enqueue 42 |> dequeue >>| enqueue 43)
 
-let ( >>= ) opt f = match opt with None -> None | Some x -> f x
+   let ( >>= ) opt f = match opt with None -> None | Some x -> f x
 
-let q : int list option =
-  let open ListQueue in
-  empty |> enqueue 42 |> dequeue >>| enqueue 43 >>= dequeue
+   let q : int list option =
+     let open ListQueue in
+     empty |> enqueue 42 |> dequeue >>| enqueue 43 >>= dequeue *)
+
+module type Fact = sig
+  val fact : int -> int
+end
+
+module RecursiveFact : Fact = struct
+  let rec fact n = if n = 0 then 1 else n * fact (n - 1)
+end
+
+module TailRecursiveFact : Fact = struct
+  let rec fact_aux n acc = if n = 0 then acc else fact_aux (n - 1) (n * acc)
+  let fact n = fact_aux n 1
+end
+
+let f = TailRecursiveFact.fact 10
+let x = TailRecursiveFact.fact 10;;
+
+print_newline @@ print_endline @@ string_of_int f;;
+print_newline @@ print_endline @@ string_of_int x
