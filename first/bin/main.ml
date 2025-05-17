@@ -1,3 +1,5 @@
+[@@@ocaml.warning "-27-32-33-34"]
+
 let () =
   print_endline "Hello, World!";
 
